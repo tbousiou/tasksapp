@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mt-5">Οι εργασίες μου</h1>
+<p>Προσθήκη εργασίας</p>
+<form action="{{ url_for('mytasks') }}", method="POST">
+    <div class="row">
+        
+        <div class="col">
+            <select class="form-select" aria-label="Project name" name="project" required>
+                <option value="">-- Παρακαλώ επιλέξτε</option>
+                {% for project in projects %}
+                <option value="{{project.id}}">{{project.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Περιγραφή εργασίας" name="description" aria-label="Task description" required>
+        </div>
+        <div class="col">
+            <input type="number" class="form-control" min="0" max="100" value="0" name="hours"
+                aria-label="Task hours name">
+        </div>
+        <div class="col">
+            <input type="date" class="form-control"  name="date"
+                aria-label="Task date" id="datePicker">
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Προσθήκη</button>
+        </div>
+    </div>
+</form>
+
+<p>Πρόσφατες εργασίες</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Χρήστης</th>
+            <th scope="col">Έργο</th>
+            <th scope="col">Περιγραφή εργασίας</th>
+            <th scope="col">Ώρες</th>
+            <th scope="col">Εβδομάδα</th>
+            <th scope="col">Ενέργειες</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.user }}</td>
+            <td>{{ task.project.name }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.hours }}</td>
+            <td>{{ task.week }}</td>
+            <td><a href="{{ url_for('task_delete',id=task.id) }}"><i class="bi bi-x-circle text-danger"></i></a></td>
+          
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+<script>
+    document.getElementById('datePicker').valueAsDate = new Date();
+</script>
+{% endblock %}

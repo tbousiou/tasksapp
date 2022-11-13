@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mt-5">Έργα</h1>
+<p>Προσθήκη έργου</p>
+<form action="{{ url_for('projects') }}", method="POST">
+    <div class="row">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Τίτλος έργου" name="name" aria-label="Project name" required>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Περιγραφή έργου" name="description" aria-label="Project description">
+        </div>
+        
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Προσθήκη</button>
+        </div>
+    </div>
+</form>
+
+<p>Λίστα έργων εργασίες</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Έργο</th>
+            <th scope="col">Περιγραφή</th>
+            <th scope="col">Ενέργειες</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.name }}</td>
+            <td>{{ project.description }}</td>
+            <td><a href="{{ url_for('project_delete',id=project.id) }}"><i class="bi bi-x-circle text-danger"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

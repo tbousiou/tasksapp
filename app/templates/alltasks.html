@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mt-5">Όλες οι εργασίες</h1>
+<p>Σελίδα διαχειριστή</p>
+
+
+<p>Πρόσφατες εργασίες</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Χρήστης</th>
+            <th scope="col">Έργο</th>
+            <th scope="col">Περιγραφή εργασίας</th>
+            <th scope="col">Ώρες</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.user }}</td>
+            <td>{{ task.project.name }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.hours }}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}
