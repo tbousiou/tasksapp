@@ -1,9 +1,9 @@
 from app import app, db
-from app.models import Project, Task
+from app.models import User, Project, Task
 import random, time
 from datetime import datetime
 
-users = ['Θεόδωρος Μ.', 'Μαρία Χ.', 'Γιάννης Π.', 'Ελένη Σ.', 'Πέτρος Ρ.']
+names = ['Θεόδωρος Μπούσιος', 'Μαρία Χριστίδου', 'Γιάννης Πετρίδης', 'Ελένη Στεργίου', 'Πέτρος Ράλλης']
 projects = ['ΕΜΔ', 'HowTo', 'eΚΕΠ', 'Ψηφιακά έγγραφα gov', 'Πλατφόρμα Αναπληρωτές']
 descriptions = [
     'Write report', 'Create presentations', 'Webstite design',
@@ -31,6 +31,7 @@ with app.app_context():
     db.create_all()
 
     demo_projects = list()
+    demo_users = list()
 
     for project in projects:
         row = Project(name=project,description='μια περιγραφή του project')
@@ -38,12 +39,19 @@ with app.app_context():
         demo_projects.append(row)
     db.session.commit()
 
+    for name in names:
+        firstname, lastname = name.split()
+        row = User(firstname=firstname,lastname=lastname)
+        db.session.add(row)
+        demo_users.append(row)
+    db.session.commit()
+
     for i in range(n_tasks):
         random_date = get_random_date()
         _, week, _= random_date.isocalendar()
 
         row = Task(
-            user=random.choice(users),
+            user=random.choice(demo_users),
             project= random.choice(demo_projects),
             description = random.choice(descriptions),
             hours = random.choice(range(1, 10)),

@@ -7,12 +7,18 @@ class Project(db.Model):
 
     tasks = db.relationship('Task', backref='project')
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(), nullable=False)
+    lastname = db.Column(db.String(), nullable=False)
+
+    tasks = db.relationship('Task', backref='user')
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.String(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
-    # project = db.Column(db.String(), nullable=False)
     description = db.Column(db.String(), nullable=False)
     hours = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime)

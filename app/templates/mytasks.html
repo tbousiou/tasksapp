@@ -46,12 +46,15 @@
     <tbody>
         {% for task in tasks %}
         <tr>
-            <td>{{ task.user }}</td>
+            <td>{{ task.user.lastname }} {{task.user.firstname }}</td>
             <td>{{ task.project.name }}</td>
             <td>{{ task.description }}</td>
             <td>{{ task.hours }}</td>
             <td>{{ task.week }}</td>
-            <td><a href="{{ url_for('task_delete',id=task.id) }}"><i class="bi bi-x-circle text-danger"></i></a></td>
+            <td>
+                <a href="#" style="margin:0 20px"><i class="bi bi-pencil-square"></i></a>
+                <a href="{{ url_for('task_delete',id=task.id) }}"><i class="bi bi-x-circle text-danger"></i></a>
+            </td>
           
 
         </tr>

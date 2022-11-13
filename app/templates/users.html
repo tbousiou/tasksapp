@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="mt-5">Έργα</h1>
-<p>Προσθήκη έργου</p>
-<form action="{{ url_for('projects') }}", method="POST">
+<h1 class="mt-5">Χρήστες</h1>
+<p>Προσθήκη χρήστη</p>
+<form action="{{ url_for('users') }}", method="POST">
     <div class="row">
         <div class="col">
-            <input type="text" class="form-control" placeholder="Τίτλος έργου" name="name" aria-label="Project name" required>
+            <input type="text" class="form-control" placeholder="Επίθετο" name="lastname" aria-label="User lastname" required>
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Περιγραφή έργου" name="description" aria-label="Project description">
+            <input type="text" class="form-control" placeholder="Όνομα" name="firstname" aria-label="User firstname" required>
         </div>
-        
         <div class="col">
             <button type="submit" class="btn btn-primary">Προσθήκη</button>
         </div>
@@ -22,20 +21,20 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Έργο</th>
-            <th scope="col">Περιγραφή</th>
+            <th scope="col">Επίθετο</th>
+            <th scope="col">Όνομα</th>
             <th scope="col">Ενέργειες</th>
         </tr>
     </thead>
     <tbody>
-        {% for project in projects %}
+        {% for user in users %}
         <tr>
-            <td>{{ project.name }}</td>
-            <td>{{ project.description }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.firstname }}</td>
             <td>
                 <a href="#" style="margin:0 20px"><i class="bi bi-pencil-square"></i></a>
                 
-                <a href="{{ url_for('project_delete',id=project.id) }}">
+                <a href="{{ url_for('user_delete',id=user.id) }}">
                     <i class="bi bi-x-circle text-danger"></i>
                 </a>
                 

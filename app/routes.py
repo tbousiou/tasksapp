@@ -1,6 +1,6 @@
 
 from app import app, db
-from app.models import Task, Project
+from app.models import Task, Project, User
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
 from sqlalchemy import desc
@@ -12,7 +12,10 @@ def index():
 
 @app.route('/mytasks', methods=['GET', 'POST'])
 def mytasks():
-    current_user = 'Θεόδωρος Μ.'
+    
+    # set the current user
+    current_user = db.get_or_404(User, 1)
+
     all_projects = db.session.execute(db.select(Project)).scalars()
     if request.method == 'POST':
         project_id = request.form['project']
@@ -69,3 +72,28 @@ def project_delete(id):
         return redirect(url_for('projects'))
     except:
         return 'There was an error while deleting that project'
+
+
+@app.route('/users', methods=['GET', 'POST'])
+def users():
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        user = User(lastname=lastname,firstname=firstname)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('users'))
+
+    all_users = db.session.execute(db.select(User)).scalars()
+    return render_template('users.html', users=all_users)
+
+
+@app.route('/user/delete/<int:id>')
+def user_delete(id):
+    user_to_delete = User.query.get_or_404(id)
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        return redirect(url_for('users'))
+    except:
+        return 'There was an error while deleting that user'

@@ -18,7 +18,7 @@
     <tbody>
         {% for task in tasks %}
         <tr>
-            <td>{{ task.user }}</td>
+            <td>{{ task.user.lastname }} {{ task.user.firstname }}</td>
             <td>{{ task.project.name }}</td>
             <td>{{ task.description }}</td>
             <td>{{ task.hours }}</td>
